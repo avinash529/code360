@@ -1,18 +1,53 @@
 */config/development
+
+# Logs
 */logs/log-*.php
 !*/logs/index.html
+
+# Cache
 */cache/*
 !system/cache/*
 !*/cache/index.html
 !*/cache/.htaccess
 
+# macOS
+.DS_Store
+
+# CodeIgniter Application Cache & Logs
+application/cache/*
+!application/cache/index.html
+
+application/logs/*
+!application/logs/index.html
+!application/logs/.htaccess
+
+!application/*/.htaccess
+
+# Composer
+composer.lock
+/vendor/
+
+# CI test database
+tests/mocks/database/ci_test.sqlite
+
+# User guide build files
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
 
-#codeigniter 3
-application/logs/*
-!application/logs/index.html
-!application/logs/.htaccess
-/vendor/
+# IDE Files
+#-------------------------
+/nbproject/
+.idea/*
+
+# Sublime Text cache files
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# Test directories
+/tests/tests/
+/tests/results/
