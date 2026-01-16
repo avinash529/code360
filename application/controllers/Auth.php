@@ -24,7 +24,8 @@ class Auth extends CI_Controller {
     
         $user = $this->User_model->get_user_by_username($username);
     
-        if ($user && password_verify($password, $user->password)) {
+        if ($user && password_verify($password, $user->password)) { //$password is posted password, 
+                                                        // $user->password is hashed password from DB
             $this->session->set_userdata([
                 'username' => $user->username,
                 'user_id'  => $user->id,
