@@ -24,16 +24,16 @@ class Dashboard extends CI_Controller {
 
         foreach ($users as $user) {
             $data[] = [
-                'image' => $user->image ? '<img src="' . base_url('uploads/' . $user->image) . '" width="50">' : '',
+                'image' => $user->image, // Return raw filename, frontend handles the <img> tag
                 'name' => $user->name,
                 'email' => $user->email,
                 'username' => $user->username,
                 'phone' => $user->phone,
                 'actions' => '
-                    <a href="javascript:void(0);" class="text-primary editUserBtn" data-toggle="modal"
+                    <a href="javascript:void(0);" class="text-indigo-600 hover:text-indigo-900 transition-colors editUserBtn" data-toggle="modal"
                         data-target="#editUserModal" data-id="' . $user->id . '" title="Edit"><i class="fas fa-edit"></i></a>
                     &nbsp;
-                    <a href="' . site_url('dashboard/delete/' . $user->id) . '" class="text-danger"
+                    <a href="' . site_url('dashboard/delete/' . $user->id) . '" class="text-red-600 hover:text-red-900 transition-colors"
                         title="Delete" onclick="return confirm(\'Are you sure?\')"><i class="fas fa-trash-alt"></i></a>
                 '
             ];
