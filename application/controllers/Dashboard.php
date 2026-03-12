@@ -73,6 +73,8 @@ class Dashboard extends CI_Controller {
         $this->db->where('id', $id);
         $this->db->update('tbluserregistration', $data);
 
+        $this->session->set_flashdata('success', 'User updated successfully!');
+
         $response = array_merge(['success' => true, 'id' => $id], $data);
         echo json_encode($response);
     }

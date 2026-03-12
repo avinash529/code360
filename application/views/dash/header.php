@@ -51,13 +51,53 @@
         /* Dropdown Hover Logic */
         .group:hover .group-hover\:block {
             display: block;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Fixed Nav & Scroll Effects */
+        nav {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        nav.nav-scrolled {
+            background-color: rgba(15, 23, 42, 0.8) !important;
+            backdrop-filter: blur(12px);
+            padding-top: 0.1rem;
+            padding-bottom: 0.1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            padding-top: 4rem;
+        }
+
+        /* Premium Form Select styling */
+        .premium-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .premium-select:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            background-color: #fff;
         }
     </style>
 </head>
 
 <body class="bg-slate-50 text-slate-800">
 
-    <nav class="bg-slate-900 border-b border-white/10 text-white shadow-lg sticky top-0 z-50">
+    <nav id="mainNav" class="bg-slate-900 border-b border-white/10 text-white shadow-lg fixed top-0 left-0 right-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 
@@ -84,14 +124,22 @@
                                     </svg>
                                 </button>
                                 
-                                <div class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden group-hover:block transform transition-all duration-200 z-50">
-                                    <div class="py-1" role="menu" aria-orientation="vertical">
+                                <div class="absolute left-0 mt-2 w-56 rounded-xl shadow-2xl bg-white/95 backdrop-blur-xl ring-1 ring-black ring-opacity-5 hidden group-hover:block transform transition-all duration-300 z-50 overflow-hidden">
+                                    <div class="py-2" role="menu" aria-orientation="vertical">
                                         <?php if ($user_id == -1): ?>
-                                            <a href="<?= site_url('transaction/add_class') ?>" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-indigo-600">Add Class</a>
-                                            <a href="<?= site_url('transaction/add_subclass') ?>" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-indigo-600">Add Subclass</a>
-                                            <a href="<?= site_url('transaction/add_product') ?>" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-indigo-600">Add Product</a>
+                                            <a href="<?= site_url('transaction/add_class') ?>" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors">
+                                                <i class="fas fa-layer-group mr-3 text-indigo-400"></i> Manage Class
+                                            </a>
+                                            <a href="<?= site_url('transaction/add_subclass') ?>" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors">
+                                                <i class="fas fa-tags mr-3 text-indigo-400"></i> Manage Subclass
+                                            </a>
+                                            <a href="<?= site_url('transaction/add_product') ?>" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors border-t border-slate-50">
+                                                <i class="fas fa-box-open mr-3 text-indigo-400"></i> Manage Products
+                                            </a>
                                         <?php else: ?>
-                                            <a href="<?= site_url('transaction/add_product') ?>" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-indigo-600">Add Product</a>
+                                            <a href="<?= site_url('transaction/add_product') ?>" class="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors">
+                                                <i class="fas fa-box-open mr-3 text-indigo-400"></i> Add Product
+                                            </a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -154,3 +202,38 @@
             </div>
         </div>
     </nav>
+    
+    <!-- Flash messages (Global) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+        <?php if ($this->session->flashdata('success')): ?>
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <strong class="font-bold">Success!</strong>
+            <span class="block sm:inline"><?= $this->session->flashdata('success') ?></span>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('error')): ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <strong class="font-bold">Error!</strong>
+            <span class="block sm:inline"><?= $this->session->flashdata('error') ?></span>
+        </div>
+        <?php endif; ?>
+
+        <?php if (validation_errors()): ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <strong class="font-bold">Validation Error!</strong>
+            <span class="block sm:inline"><?= validation_errors() ?></span>
+        </div>
+        <?php endif; ?>
+    </div>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('mainNav');
+            if (window.scrollY > 10) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+        });
+    </script>

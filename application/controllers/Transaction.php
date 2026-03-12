@@ -78,6 +78,10 @@ class Transaction extends CI_Controller {
         redirect('transaction/add_class');
     }
     
+    public function get_subclasses_by_class_ajax($class_id) {
+        $subclasses = $this->Transaction_model->get_subclasses_by_class($class_id);
+        echo json_encode($subclasses);
+    }
 
     
     public function check_class_exists($class_name) {
@@ -221,11 +225,13 @@ class Transaction extends CI_Controller {
     public function update_product() {
         $data = $this->input->post();
         $this->Transaction_model->update_product($data);
+        $this->session->set_flashdata('success', 'Product updated successfully!');
         echo "success";
     }
     
     public function delete_product_ajax($id) {
         $this->Transaction_model->delete_product($id);
+        $this->session->set_flashdata('success', 'Product deleted successfully!');
         echo "deleted";
     }
     

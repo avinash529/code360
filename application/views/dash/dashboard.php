@@ -4,13 +4,6 @@
         <!-- Optional: Add an "Add User" button here if needed -->
     </div>
 
-    <?php if ($this->session->flashdata('success')): ?>
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6" role="alert">
-        <strong class="font-bold">Success!</strong>
-        <span class="block sm:inline"><?= $this->session->flashdata('success') ?></span>
-    </div>
-    <?php endif; ?>
-
     <!-- Main Card -->
     <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
         <div class="bg-slate-50 border-b border-slate-200 px-6 py-4">
@@ -223,7 +216,7 @@ $(document).ready(function() {
                 // Hide Tailwind Modal
                  $('#editUserModal').addClass('hidden');
                  $('body').removeClass('overflow-hidden');
-                 userTable.ajax.reload();
+                 location.reload();
             }
         });
     });

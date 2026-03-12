@@ -1,66 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Products | Code360</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-
-    <style>
-        body { font-family: 'Outfit', sans-serif; }
-        
-        /* DataTables Customization */
-        .dataTables_wrapper .dataTables_length select,
-        .dataTables_wrapper .dataTables_filter input {
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.375rem;
-            padding: 0.25rem 0.5rem;
-        }
-        table.dataTable thead th, table.dataTable thead td { border-bottom: 2px solid #e2e8f0 !important; }
-        table.dataTable.no-footer { border-bottom: 1px solid #e2e8f0 !important; }
-    </style>
-</head>
-
-<body class="bg-slate-50 text-slate-800">
-
-    <!-- Replicating Navbar -->
-    <nav class="bg-slate-900 border-b border-white/10 text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <a class="flex-shrink-0 font-bold text-xl tracking-wider text-indigo-400" href="<?= site_url('dashboard') ?>">MyApp</a>
-                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="<?= site_url('dashboard') ?>" class="text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
-                     </div>
-                </div>
-                 <div class="hidden md:block">
-                    <div class="ml-4 flex items-center md:ml-6 space-x-4">
-                        <span class="text-slate-400 text-sm">Logged in as: <span class="text-white font-medium"><?= $this->session->userdata('username') ?></span></span>
-                        <a href="<?= site_url('auth/logout') ?>" class="border border-red-500/50 text-red-400 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
-    <!-- Flash messages -->
-    <?php if ($this->session->flashdata('success')): ?>
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"><?= $this->session->flashdata('success') ?></div>
-    <?php elseif ($this->session->flashdata('error')): ?>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"><?= $this->session->flashdata('error') ?></div>
-    <?php endif; ?>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     
     <div id="react-root"></div>
 
@@ -76,8 +14,9 @@
                 <form action="<?= site_url('transaction/save_product') ?>" method="post" class="space-y-4">
                     <div>
                         <label for="class_id" class="block text-sm font-medium text-slate-700 mb-1">Product Class</label>
-                        <select name="class_id" id="class_id" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2.5 bg-slate-50" required>
+                        <select name="class_id" id="class_id" class="premium-select block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2.5 bg-slate-50" required>
                             <option value="">Select Class</option>
+                            
                             <?php foreach ($classes as $class): ?>
                             <option value="<?= $class->id ?>"><?= $class->class_name ?></option>
                             <?php endforeach; ?>
@@ -86,11 +25,8 @@
 
                     <div>
                         <label for="subclass_id" class="block text-sm font-medium text-slate-700 mb-1">Product Subclass</label>
-                        <select name="subclass_id" id="subclass_id" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2.5 bg-slate-50" required>
-                            <option value="">Select Subclass</option>
-                            <?php foreach ($subclasses as $sub): ?>
-                            <option value="<?= $sub->id ?>"><?= $sub->subclass_name ?></option>
-                            <?php endforeach; ?>
+                        <select name="subclass_id" id="subclass_id" class="premium-select block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2.5 bg-slate-50" required disabled>
+                            <option value="">Select Class First</option>
                         </select>
                     </div>
 
@@ -181,11 +117,11 @@
                     <input type="hidden" name="id" id="edit_id">
                     <div>
                         <label for="edit_class_id" class="block text-sm font-medium text-slate-700 mb-1">Class</label>
-                        <select name="class_id" id="edit_class_id" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2.5 bg-slate-50" required></select>
+                        <select name="class_id" id="edit_class_id" class="premium-select block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2.5 bg-slate-50" required></select>
                     </div>
                     <div>
                         <label for="edit_subclass_id" class="block text-sm font-medium text-slate-700 mb-1">Subclass</label>
-                        <select name="subclass_id" id="edit_subclass_id" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2.5 bg-slate-50" required></select>
+                        <select name="subclass_id" id="edit_subclass_id" class="premium-select block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2.5 bg-slate-50" required></select>
                     </div>
                     <div>
                         <label for="edit_product_name" class="block text-sm font-medium text-slate-700 mb-1">Product Name</label>
@@ -210,11 +146,12 @@
 
 <!-- DataTables -->
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<!-- Not loading DataTables Bootstrap 4 JS anymore intentionally -->
 
 <script>
 $(function() {
-    $('#productTable').DataTable({ dom: 'frtip' });
+    if (!$.fn.DataTable.isDataTable('#productTable')) {
+        $('#productTable').DataTable({ dom: 'frtip' });
+    }
 
     $('.editBtn').on('click', function() {
         const id = $(this).data('id');
@@ -235,11 +172,13 @@ $(function() {
                     );
                 });
 
-                $('#edit_subclass_id').empty();
+                $('#edit_subclass_id').empty().append('<option value="">Select Subclass</option>');
                 $.each(data.subclasses, function(i, sub) {
-                    $('#edit_subclass_id').append(
-                        `<option value="${sub.id}" ${sub.id == data.subclass_id ? 'selected' : ''}>${sub.subclass_name}</option>`
-                    );
+                    if (sub.class_id == data.class_id) {
+                        $('#edit_subclass_id').append(
+                            `<option value="${sub.id}" ${sub.id == data.subclass_id ? 'selected' : ''}>${sub.subclass_name}</option>`
+                        );
+                    }
                 });
 
                 // Show Tailwind Modal
@@ -292,8 +231,60 @@ $(function() {
             });
         }
     });
+
+    // Dependent Dropdown for Add Product
+    $('#class_id').on('change', function() {
+        const classId = $(this).val();
+        const subclassSelect = $('#subclass_id');
+        
+        subclassSelect.empty().append('<option value="">Loading...</option>').prop('disabled', true);
+        
+        if (classId) {
+            $.ajax({
+                url: '<?= site_url("transaction/get_subclasses_by_class_ajax") ?>/' + classId,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    subclassSelect.empty().append('<option value="">Select Subclass</option>');
+                    $.each(data, function(i, sub) {
+                        subclassSelect.append(`<option value="${sub.id}">${sub.subclass_name}</option>`);
+                    });
+                    subclassSelect.prop('disabled', false);
+                },
+                error: function() {
+                    subclassSelect.empty().append('<option value="">Error loading</option>');
+                }
+            });
+        } else {
+            subclassSelect.empty().append('<option value="">Select Class First</option>');
+        }
+    });
+
+    // Dependent Dropdown for Edit Modal
+    $('#edit_class_id').on('change', function() {
+        const classId = $(this).val();
+        const subclassSelect = $('#edit_subclass_id');
+        
+        subclassSelect.empty().append('<option value="">Loading...</option>');
+        
+        if (classId) {
+            $.ajax({
+                url: '<?= site_url("transaction/get_subclasses_by_class_ajax") ?>/' + classId,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    subclassSelect.empty().append('<option value="">Select Subclass</option>');
+                    $.each(data, function(i, sub) {
+                        subclassSelect.append(`<option value="${sub.id}">${sub.subclass_name}</option>`);
+                    });
+                },
+                error: function() {
+                    subclassSelect.empty().append('<option value="">Error loading</option>');
+                }
+            });
+        } else {
+            subclassSelect.empty().append('<option value="">Select Class First</option>');
+        }
+    });
 });
 </script>
-
-</body>
-</html>
